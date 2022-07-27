@@ -4,6 +4,7 @@
     Author     : tddiarra
 --%>
 
+<%@page import="java.lang.String"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -18,30 +19,41 @@
         <fieldset>
             <h1>Bienvenu dans le formulaire d'inscription</h1>
             <hr>
+            <%
+                String erreur = (String) request.getAttribute("erreur");
+                if(erreur !=null){
+                 %>
+            
+                 <h3 class="erreur"><%out.print(erreur);%></h3>
+            <%   
+                }
+                
+            %>
+            
             <form action="monServlet" method="post">
                 <div id="sp">
                     <label for="">Nom</label>
-                    <input type="text" name="nom" value="" size="30" required/>
+                    <input type="text" name="nom" value="" size="30"/>
                 </div>
                 <div id="sp">
                     <label for="">Prenom</label>
-                    <input type="text" name="prenom" value="" size="30" required/>
+                    <input type="text" name="prenom" value="" size="30"/>
                 </div>
                 <div id="sp">
                     <label for="">Speudo</label>
-                    <input type="text" name="pseudo" value="" size="30" required/>
+                    <input type="text" name="pseudo" value="" size="30"/>
                 </div>
                 <div id="sp">
                     <label for="">E-mail</label>
-                    <input type="email" name="email" value="" size="30" required/>
+                    <input type="email" name="email" value="" size="30" />
                 </div>
                 <div id="sp">
                     <label for="">Mot de passe</label>
-                    <input type="password" name="mot2passe" value="" size="30" required/>
+                    <input type="password" name="mot2passe" value="" size="30" />
                 </div>
                 <div id="sp">
                     <label for="">Comfirmer MDP</label>
-                    <input type="password" name="mot2passe2" value="" size="30" required/>
+                    <input type="password" name="mot2passe2" value="" size="30" />
                 </div>
                 <br>
                 <div id="sp">
@@ -95,6 +107,9 @@
             #valider:hover{
                 color: white;
                 background-color: white;
+            }
+            .erreur{
+                color: red;
             }
         </style>
 </body>

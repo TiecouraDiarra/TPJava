@@ -36,36 +36,33 @@ public class monServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("valider")!= null) {
+        if (request.getParameter("valider") != null) {
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String email = request.getParameter("email");
             String pseudo = request.getParameter("pseudo");
             String mot2passe = request.getParameter("mot2passe");
             String mot2passe2 = request.getParameter("mot2passe2");
-            if (mot2passe.equals(mot2passe2)) {
-
-                utilisateur u1 = new utilisateur(nom, prenom, email, pseudo, mot2passe, mot2passe2);
-                liste.add(u1);
-
-                request.setAttribute("liste", liste);
-                request.setAttribute("nom", nom);
-                request.setAttribute("prenom", prenom);
-
-                this.getServletContext().getRequestDispatcher("/Acceuil.jsp").forward(request, response);
-                //request.getRequestDispatcher("/Acceuil.jsp").forward(request, response);
-
+            if (nom.equals("") || prenom.equals("") || email.equals("") || pseudo.equals("") || mot2passe.equals("") || mot2passe2.equals("")) {
+                 request.setAttribute("erreur", "Veuillez renseigner tous les champs");
+                this.getServletContext().getRequestDispatcher("/Inscrire.jsp").forward(request, response);
             } else {
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>echec de l'inscription</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h3> Les deux mots de passe ne sont les même</h3>");
-                    out.println("</body>");
-                    out.println("</html>");
+               
+                if (mot2passe.equals(mot2passe2)) {
+
+                    utilisateur u1 = new utilisateur(nom, prenom, email, pseudo, mot2passe, mot2passe2);
+                    liste.add(u1);
+
+                    request.setAttribute("liste", liste);
+                    request.setAttribute("nom", nom);
+                    request.setAttribute("prenom", prenom);
+
+                    this.getServletContext().getRequestDispatcher("/Acceuil.jsp").forward(request, response);
+                    //request.getRequestDispatcher("/Acceuil.jsp").forward(request, response);
+
+                } else {
+                    request.setAttribute("erreur", "Les deux mots de passe sont les même");
+                    this.getServletContext().getRequestDispatcher("/Inscrire.jsp").forward(request, response);
                 }
             }
 
